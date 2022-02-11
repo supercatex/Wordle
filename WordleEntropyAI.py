@@ -43,6 +43,6 @@ class WordleEntropyAI(WordleAI):
 
 
 if __name__ == "__main__":
-    game = WordleEntropyAI("./res/words.txt")
-    game.auto_play("./data/data_information_theory_3s.txt", 1000)
-    game.show_barchart("./data/data_information_theory_3s.txt", 10)
+    game = WordleEntropyAI("./res/words.txt", 30)
+    game.auto_play("./data/data_information_theory_30s.txt", 1000)
+    game.show_barchart("./data/data_information_theory_30s.txt", 10, 16, 500)

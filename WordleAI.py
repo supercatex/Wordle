@@ -36,7 +36,7 @@ class WordleAI(Wordle):
             with open(save_path, "a") as f: f.write("%d\n" % n_guess)
 
     @classmethod
-    def show_barchart(cls, save_path: str, skip: int = 10):
+    def show_barchart(cls, save_path: str, skip: int = 10, x_lim: int = 0, y_lim: int = 0):
         with open(save_path, "r") as f:
             data: [int] = [int(x.strip()) for x in f.readlines()]
         x: [int] = []
@@ -54,11 +54,13 @@ class WordleAI(Wordle):
             if i % skip == 0 or i == len(data) - 1:
                 plt.cla()
                 plt.bar(x[1:], y[1:], color="b")
-                plt.ylim(0, max(y) + 20)
+                plt.xlim(0, len(x) + 1 if x_lim == 0 else x_lim)
+                plt.ylim(0, max(y) + 30 if y_lim == 0 else y_lim)
                 for j in range(1, len(x)):
-                    plt.text(x[j] - .25, y[j] + 5, str(y[j]), color="blue")
-                plt.text(0, max(y) + 20, "Sum: %d, Avg: %.4f, Less than 6: %.2f%%" % (
-                    sum(y), sum_y / (i + 1), sum(y[:7]) / sum(y) * 100
+                    plt.text(x[j] - .3, y[j] + 20, str(y[j]), color="blue")
+                plt.text(0, (max(y) if y_lim == 0 else y_lim) + 10,
+                         "Sum: %d, Avg: %.4f, Win: %.2f%%" % (
+                             sum(y), sum_y / (i + 1), sum(y[:7]) / sum(y) * 100
                 ), color="blue")
                 plt.pause(0.01)
         plt.ioff()
@@ -68,4 +70,4 @@ class WordleAI(Wordle):
 if __name__ == "__main__":
     game = WordleAI("./res/words.txt")
     game.auto_play("./data/data_random_selection.txt", 1000)
-    game.show_barchart("./data/data_random_selection.txt")
+    game.show_barchart("./data/data_random_selection.txt", 10, 16, 500)
