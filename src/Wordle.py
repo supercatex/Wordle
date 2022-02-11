@@ -102,6 +102,6 @@ class Wordle(object):
 
 
 if __name__ == "__main__":
-    game = Wordle("./res/words.txt")
+    game = Wordle("../res/words.txt")
     game.new_game()
     game.play()

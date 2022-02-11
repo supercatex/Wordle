@@ -22,9 +22,9 @@ https://hackmd.io/@sXG2cRDpRbONCsrtz8jfqg/ry-0k0PwH
 
 """
 
-from Wordle import Wordle
-from WordleAI import WordleAI
-from WordleEntropyAI import WordleEntropyAI
+from src.Wordle import Wordle
+from src.WordleAI import WordleAI
+from src.WordleEntropyAI import WordleEntropyAI
 
 
 if __name__ == "__main__":
