@@ -4,11 +4,26 @@ import matplotlib.pyplot as plt
 
 
 class WordleAI(Wordle):
-    def __init__(self, words_path: str):
+    def __init__(self, words_path: str, human_player: bool = False, human_checker: bool = False):
         super().__init__(words_path)
+        self.human_player: bool = human_player
+        self.human_checker: bool = human_checker
 
     def get_guess(self) -> str:
-        return random.choice(self.possible_words)
+        if self.human_player:
+            return super().get_guess()
+        else:
+            return random.choice(self.possible_words)
+
+    def get_pattern(self) -> str:
+        if self.human_checker:
+            pattern: str = input("Pattern:")
+            while len(pattern) != len(self.answer) or not set(pattern).issubset({'A', 'B', 'X'}):
+                print("Pattern only contain 'A', 'B', 'X' characters!")
+                pattern = input("Pattern again:")
+            return pattern
+        else:
+            return super().get_pattern()
 
     def auto_play(self, save_path: str, times: int):
         with open(save_path, "a+"): pass
@@ -52,5 +67,5 @@ class WordleAI(Wordle):
 
 if __name__ == "__main__":
     game = WordleAI("./res/words.txt")
-    game.auto_play("data_random.txt", 1000)
-    game.show_barchart("data_random.txt")
+    game.auto_play("./data/data_random_selection.txt", 1000)
+    game.show_barchart("./data/data_random_selection.txt")

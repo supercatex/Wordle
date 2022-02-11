@@ -23,9 +23,10 @@ class Wordle(object):
 
     def get_guess(self) -> str:
         guess: str = input("Guess:")
-        while guess not in self.words:
+        while guess != "quit" and guess not in self.words:
             print("Not in word list!")
-            guess = input("Guess:")
+            guess = input("Guess again:")
+        if guess == "quit": exit(1)
         return guess
 
     def set_guess(self):
