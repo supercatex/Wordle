@@ -6,18 +6,25 @@ import time
 
 
 class WordleEntropyAI(WordleAI):
-    def __init__(self, words_path: str, time_limit: float = 3):
-        super().__init__(words_path)
+    def __init__(self, words_path: str, time_limit: float = 3, human_player: bool = False, human_checker: bool = False):
+        super().__init__(words_path, human_player, human_checker)
         self.time_limit: float = time_limit
 
     def get_guess(self) -> str:
-        if len(self.possible_words) <= 2: return self.possible_words[0]
         entropy_map: {str, float} = self.get_entropy_map__(self.possible_words, self.words, self.time_limit)
         print("   Suggestions:")
-        for i, (k, v) in enumerate(entropy_map.items()):
-            if i == 3: break
-            print("      %d. %s %.4f" % (i + 1, k, v))
-        return next(iter(entropy_map))
+        if len(self.possible_words) <= 2:
+            print(self.possible_words)
+        else:
+            for i, (k, v) in enumerate(entropy_map.items()):
+                if i == 3: break
+                print("      %d. %s %.4f" % (i + 1, k, v))
+
+        if self.human_player:
+            return super().get_guess()
+        else:
+            if len(self.possible_words) <= 2: return self.possible_words[0]
+            return next(iter(entropy_map))
 
     @classmethod
     def get_entropy__(cls, word: str, possible_words: [str]) -> float:
@@ -45,4 +52,4 @@ class WordleEntropyAI(WordleAI):
 if __name__ == "__main__":
     game = WordleEntropyAI("./res/words.txt", 30)
     game.auto_play("./data/data_information_theory_30s.txt", 1000)
-    game.show_barchart("./data/data_information_theory_30s.txt", 10, 16, 500)
+    game.show_barchart("./data/data_information_theory_30s.txt", 10, 16, 550)

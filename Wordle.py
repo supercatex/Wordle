@@ -45,7 +45,7 @@ class Wordle(object):
             pattern: str = self.get_pattern()
             self.filter_possible_words(pattern)
 
-            print("%d. %s | %s | %s" % (self.n_guess, self.guess, pattern, self.possible_words[:10]))
+            print("%d. %s | %s | %s" % (self.n_guess, self.guess, pattern, self.possible_words[:0]))
         return self.n_guess
 
     @classmethod

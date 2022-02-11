@@ -70,4 +70,4 @@ class WordleAI(Wordle):
 if __name__ == "__main__":
     game = WordleAI("./res/words.txt")
     game.auto_play("./data/data_random_selection.txt", 1000)
-    game.show_barchart("./data/data_random_selection.txt", 10, 16, 500)
+    game.show_barchart("./data/data_random_selection.txt", 10, 16, 550)
