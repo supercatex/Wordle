@@ -52,46 +52,30 @@ class Wordle(object):
     def get_possible_words__(cls, guess: str, pattern: str, words: [str]) -> [str]:
         possible_words: [str] = []
         for word in words:
-            is_match: bool = True
-            for i in range(len(pattern)):
-                if pattern[i] == 'A':
-                    if guess[i] != word[i]:
-                        is_match = False
-                        break
-                elif pattern[i] == 'B':
-                    if guess[i] == word[i] or guess[i] not in word:
-                        is_match = False
-                        break
-                else:
-                    if guess[i] == word[i]:
-                        is_match = False
-                        break
-                    elif guess[i] in word:
-                        is_contained_A: bool = False
-                        for j, c in enumerate(word):
-                            if guess[i] == c:
-                                if pattern[j] != 'A':
-                                    is_match = False
-                                else:
-                                    is_contained_A = True
-                        if is_contained_A: is_match = True
-                        if not is_match: break
-            if is_match: possible_words.append(word)
+            if Wordle.get_pattern__(guess, word) == pattern:
+                possible_words.append(word)
         return possible_words
 
     @classmethod
     def get_pattern__(cls, guess: str, answer: str) -> str:
-        pattern: [str] = []
+        pattern: [str] = [''] * 5
+        paired_pos = set()
+
         for i in range(len(answer)):
             if guess[i] == answer[i]:
-                pattern.append('A')
-            else:
-                pattern.append('X')
-        for i in range(len(answer)):
-            if pattern[i] != 'X': continue
-            for j in range(len(answer)):
-                if i == j or pattern[j] == 'A' or guess[i] != answer[j]: continue
-                pattern[i] = 'B'
+                pattern[i] = 'A'
+                paired_pos.add(i)
+
+        for i in range(len(guess)):
+            if pattern[i] == '':
+                for j in range(len(answer)):
+                    if guess[i] == answer[j] and j not in paired_pos:
+                        pattern[i] = 'B'
+                        paired_pos.add(j)
+                        break
+                else:
+                    pattern[i] = 'X'
+
         return "".join(pattern)
 
     @classmethod
