@@ -5,7 +5,7 @@
 # date              : 2022-02-11
 # license           : MIT
 # py version        : 3.8.10
-
+#
 """
 
 Wordle: https://www.powerlanguage.co.uk/wordle/
